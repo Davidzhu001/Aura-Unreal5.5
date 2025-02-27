@@ -1,19 +1,15 @@
-// Wecheng & Alicia Copyright
+// Copyright Druid Mechanics
 
 
-#include "Characters/AuraCharacterBase.h"
+#include "Character/AuraCharacterBase.h"
 
-// Sets default values
 AAuraCharacterBase::AAuraCharacterBase()
 {
 	PrimaryActorTick.bCanEverTick = false;
 
-	// 设置武器Mesh
 	Weapon = CreateDefaultSubobject<USkeletalMeshComponent>("Weapon");
 	Weapon->SetupAttachment(GetMesh(), FName("WeaponHandSocket"));
-	Weapon->SetCollisionEnabled(ECollisionEnabled::NoCollision); // 取消碰撞
-	
-
+	Weapon->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 }
 
 UAbilitySystemComponent* AAuraCharacterBase::GetAbilitySystemComponent() const
@@ -21,9 +17,9 @@ UAbilitySystemComponent* AAuraCharacterBase::GetAbilitySystemComponent() const
 	return AbilitySystemComponent;
 }
 
-
 void AAuraCharacterBase::BeginPlay()
 {
 	Super::BeginPlay();
 	
 }
+

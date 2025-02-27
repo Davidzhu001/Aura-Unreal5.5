@@ -1,18 +1,20 @@
-// Wecheng & Alicia Copyright
+// Copyright Druid Mechanics
 
 
-#include "UI/Hud/AuraHUD.h"
+#include "UI/HUD/AuraHUD.h"
 
-#include "Blueprint/UserWidget.h"
-#include "UI/WidgetController/OverlayAuraWidgetController.h"
-#include "UI/Widgets/AuraUserWidget.h"
+#include "UI/Widget/AuraUserWidget.h"
+#include "UI/WidgetController/OverlayWidgetController.h"
 
-UOverlayAuraWidgetController* AAuraHUD::GetOverlayWidgetController(const FWidgetControllerParams& WCParams)
+UOverlayWidgetController* AAuraHUD::GetOverlayWidgetController(const FWidgetControllerParams& WCParams)
 {
-	if (OverlayWidgetClass == nullptr)
+	if (OverlayWidgetController == nullptr)
 	{
-		OverlayWidgetController = NewObject<UOverlayAuraWidgetController>(this, OverlayWidgetControllerClass);
+		OverlayWidgetController = NewObject<UOverlayWidgetController>(this, OverlayWidgetControllerClass);
 		OverlayWidgetController->SetWidgetControllerParams(WCParams);
+
+		//添加监听属性变化
+		OverlayWidgetController->BindCallbacksToDependences();
 
 		return OverlayWidgetController;
 	}
@@ -21,19 +23,17 @@ UOverlayAuraWidgetController* AAuraHUD::GetOverlayWidgetController(const FWidget
 
 void AAuraHUD::InitOverlay(APlayerController* PC, APlayerState* PS, UAbilitySystemComponent* ASC, UAttributeSet* AS)
 {
-	checkf(OverlayWidgetController, TEXT("Overlay widget class uninitialized, please fill out BP_AuroHUD"));
-	checkf(OverlayWidgetControllerClass == nullptr, TEXT("Overlay widget class uninitialized"));
+	checkf(OverlayWidgetClass, TEXT("Overlay Widget Class uninitialized, please fill out BP_AuraHUD"));
+	checkf(OverlayWidgetControllerClass, TEXT("Overlay Widget Controller Class uninitialized, please fill out BP_AuraHUD"));
 	
-	UUserWidget* Widget = CreateWidget<UUserWidget>( GetWorld(), OverlayWidgetClass );
+	UUserWidget* Widget = CreateWidget<UUserWidget>(GetWorld(), OverlayWidgetClass);
 	OverlayWidget = Cast<UAuraUserWidget>(Widget);
-
-	FWidgetControllerParams WidgetControllerParams(PC,PS,ASC,AS);
-	UOverlayAuraWidgetController* WidgetController = GetOverlayWidgetController(WidgetControllerParams);
+	
+	const FWidgetControllerParams WidgetControllerParams(PC, PS, ASC, AS);
+	UOverlayWidgetController* WidgetController = GetOverlayWidgetController(WidgetControllerParams);
 
 	OverlayWidget->SetWidgetController(WidgetController);
-
-	
+	WidgetController->BroadcastInitialValues();
 	Widget->AddToViewport();
-
-	
 }
+

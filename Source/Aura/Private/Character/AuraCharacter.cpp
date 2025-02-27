@@ -1,13 +1,13 @@
 // Copyright Druid Mechanics
 
 
-#include "Characters/AuraCharacter.h"
+#include "Character/AuraCharacter.h"
 
 #include "AbilitySystemComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Player/AuraPlayerController.h"
 #include "Player/AuraPlayerState.h"
-#include "UI/Hud/AuraHUD.h"
+#include "UI/HUD/AuraHUD.h"
 
 AAuraCharacter::AAuraCharacter()
 {
@@ -44,15 +44,12 @@ void AAuraCharacter::InitAbilityActorInfo()
 	AuraPlayerState->GetAbilitySystemComponent()->InitAbilityActorInfo(AuraPlayerState, this);
 	AbilitySystemComponent = AuraPlayerState->GetAbilitySystemComponent();
 	AttributeSet = AuraPlayerState->GetAttributeSet();
-	
-	AAuraPlayerController* AuraPlayerController =	Cast<AAuraPlayerController>(GetController<AAuraPlayerController>());
-	if ( AuraPlayerController)
+
+	if (AAuraPlayerController* AuraPlayerController = Cast<AAuraPlayerController>(GetController()))
 	{
-		AAuraHUD* AuraHUD	= AuraPlayerController->GetHUD<AAuraHUD>();
-		if (AuraHUD)
+		if (AAuraHUD* AuraHUD = Cast<AAuraHUD>(AuraPlayerController->GetHUD()))
 		{
 			AuraHUD->InitOverlay(AuraPlayerController, AuraPlayerState, AbilitySystemComponent, AttributeSet);
 		}
-	}	
-	
+	}
 }

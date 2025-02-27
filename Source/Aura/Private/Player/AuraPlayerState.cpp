@@ -1,22 +1,20 @@
-// Wecheng & Alicia Copyright
+// Copyright Druid Mechanics
 
 
 #include "Player/AuraPlayerState.h"
 
-#include "GAS/AbilitySystem/AuraAbilitySystemComponent.h"
-#include "GAS/AbilitySystem/AuraAttributeSet.h"
+#include "AbilitySystem/AuraAbilitySystemComponent.h"
+#include "AbilitySystem/AuraAttributeSet.h"
 
 AAuraPlayerState::AAuraPlayerState()
 {
-	//服务器同步时间;
-	NetUpdateFrequency = 100.f;
-
-	
 	AbilitySystemComponent = CreateDefaultSubobject<UAuraAbilitySystemComponent>("AbilitySystemComponent");
-	AbilitySystemComponent->SetIsReplicated(true); //是否与服务器同步
+	AbilitySystemComponent->SetIsReplicated(true);
 	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Mixed);
-	
+
 	AttributeSet = CreateDefaultSubobject<UAuraAttributeSet>("AttributeSet");
+	
+	NetUpdateFrequency = 100.f;
 }
 
 UAbilitySystemComponent* AAuraPlayerState::GetAbilitySystemComponent() const

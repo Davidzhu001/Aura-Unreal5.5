@@ -1,51 +1,49 @@
-// Wecheng & Alicia Copyright
+// Copyright Druid Mechanics
 
 
-#include "Actors/AuraEffectActor.h"
+#include "Actor/AuraEffectActor.h"
 
 #include "AbilitySystemComponent.h"
 #include "AbilitySystemInterface.h"
-#include "GAS/AbilitySystem/AuraAttributeSet.h"
+#include "AbilitySystem/AuraAttributeSet.h"
+#include "Components/SphereComponent.h"
 
 AAuraEffectActor::AAuraEffectActor()
 {
 	PrimaryActorTick.bCanEverTick = false;
-	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
+
+	Mesh = CreateDefaultSubobject<UStaticMeshComponent>("Mesh");
 	SetRootComponent(Mesh);
-	
-	Sphere = CreateDefaultSubobject<USphereComponent>(FName("Sphere"));
+
+	Sphere = CreateDefaultSubobject<USphereComponent>("Sphere");
 	Sphere->SetupAttachment(GetRootComponent());
 }
 
 void AAuraEffectActor::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	//TODO:: Change this to apply a gameplay Effect;
+	//TODO: Change this to apply a Gameplay Effect. For now, using const_cast as a hack!
 	if (IAbilitySystemInterface* ASCInterface = Cast<IAbilitySystemInterface>(OtherActor))
 	{
-		const  UAuraAttributeSet* AuraAttributeSet = Cast<UAuraAttributeSet>(ASCInterface->GetAbilitySystemComponent()->GetAttributeSet(UAuraAttributeSet::StaticClass()));
+		const UAuraAttributeSet* AuraAttributeSet = Cast<UAuraAttributeSet>(ASCInterface->GetAbilitySystemComponent()->GetAttributeSet(UAuraAttributeSet::StaticClass()));
 
 		UAuraAttributeSet* MutableAuraAttributeSet = const_cast<UAuraAttributeSet*>(AuraAttributeSet);
 		MutableAuraAttributeSet->SetHealth(AuraAttributeSet->GetHealth() + 25.f);
 		Destroy();
 	}
-	
 }
 
 void AAuraEffectActor::EndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
-
+	
 }
 
 void AAuraEffectActor::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// 覆盖检测
 	Sphere->OnComponentBeginOverlap.AddDynamic(this, &AAuraEffectActor::OnOverlap);
 	Sphere->OnComponentEndOverlap.AddDynamic(this, &AAuraEffectActor::EndOverlap);
-	
 }
-
 

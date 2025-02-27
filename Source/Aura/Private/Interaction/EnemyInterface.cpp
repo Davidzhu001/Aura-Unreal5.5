@@ -1,4 +1,4 @@
-// Wecheng & Alicia Copyright
+// Copyright Druid Mechanics
 
 
 #include "Interaction/EnemyInterface.h"

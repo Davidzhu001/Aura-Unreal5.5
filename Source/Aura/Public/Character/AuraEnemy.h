@@ -1,9 +1,9 @@
-// Wecheng & Alicia Copyright
+// Copyright Druid Mechanics
 
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Characters/AuraCharacterBase.h"
+#include "Character/AuraCharacterBase.h"
 #include "Interaction/EnemyInterface.h"
 #include "AuraEnemy.generated.h"
 
@@ -17,13 +17,11 @@ class AURA_API AAuraEnemy : public AAuraCharacterBase, public IEnemyInterface
 public:
 	AAuraEnemy();
 
-	/* Enemy Interface */
+	/** Enemy Interface */
 	virtual void HighlightActor() override;
 	virtual void UnHighlightActor() override;
-	/* End Enemy Interface*/
-
+	/** end Enemy Interface */
+	
 protected:
 	virtual void BeginPlay() override;
-	
-	
 };
