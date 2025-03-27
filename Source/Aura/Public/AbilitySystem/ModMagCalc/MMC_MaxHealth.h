@@ -1,4 +1,4 @@
-// Wecheng & Alicia Copyright
+// Copyright Druid Mechanics
 
 #pragma once
 
@@ -21,6 +21,4 @@ public:
 private:
 
 	FGameplayEffectAttributeCaptureDefinition VigorDef;
-	
-	
 };

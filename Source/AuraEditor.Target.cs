@@ -1,4 +1,4 @@
-// Wecheng & Alicia Copyright
+// Copyright Druid Mechanics
 
 using UnrealBuildTool;
 using System.Collections.Generic;

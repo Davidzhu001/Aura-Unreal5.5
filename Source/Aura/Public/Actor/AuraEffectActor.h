@@ -11,7 +11,7 @@ class UAbilitySystemComponent;
 class UGameplayEffect;
 
 UENUM(BlueprintType)
-enum class EEffectApplicationPolicy  : uint8
+enum class EEffectApplicationPolicy: uint8
 {
 	ApplyOnOverlap,
 	ApplyOnEndOverlap,
@@ -19,7 +19,7 @@ enum class EEffectApplicationPolicy  : uint8
 };
 
 UENUM(BlueprintType)
-enum class EEffectRemovalPolicy  : uint8
+enum class EEffectRemovalPolicy: uint8
 {
 	RemoveOnEndOverlap,
 	DoNotRemove
@@ -72,5 +72,5 @@ protected:
 	TMap<FActiveGameplayEffectHandle, UAbilitySystemComponent*> ActiveEffectHandles;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Applied Effects")
-	float ActorLevel = 1.0f;
+	float ActorLevel = 1.f;
 };

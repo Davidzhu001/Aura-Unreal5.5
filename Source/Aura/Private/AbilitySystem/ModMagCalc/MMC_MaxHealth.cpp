@@ -1,4 +1,4 @@
-// Wecheng & Alicia Copyright
+// Copyright Druid Mechanics
 
 
 #include "AbilitySystem/ModMagCalc/MMC_MaxHealth.h"
@@ -13,7 +13,6 @@ UMMC_MaxHealth::UMMC_MaxHealth()
 	VigorDef.bSnapshot = false;
 
 	RelevantAttributesToCapture.Add(VigorDef);
-	
 }
 
 float UMMC_MaxHealth::CalculateBaseMagnitude_Implementation(const FGameplayEffectSpec& Spec) const

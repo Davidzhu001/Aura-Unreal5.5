@@ -1,9 +1,11 @@
-// Wecheng & Alicia Copyright
+// Copyright Druid Mechanics
 
 
 #include "AbilitySystem/ModMagCalc/MMC_MaxMana.h"
+
 #include "AbilitySystem/AuraAttributeSet.h"
 #include "Interaction/CombatInterface.h"
+
 UMMC_MaxMana::UMMC_MaxMana()
 {
 	IntDef.AttributeToCapture = UAuraAttributeSet::GetIntelligenceAttribute();
